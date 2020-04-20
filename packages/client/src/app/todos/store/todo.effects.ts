@@ -26,5 +26,18 @@ export class TodoEffects {
     ),
   );
 
+  updateTodo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.SET_DONE, actions.SET_UNDONE),
+      mergeMap((action: actions.SetDone | actions.SetUndone) => {
+        let isDone = action instanceof actions.SetDone ? true : false;
+
+        return this.todosService
+          .setTodoDone(action.id, isDone)
+          .pipe(map((todo) => new actions.UpdateTodoSuccess(todo)));
+      }),
+    ),
+  );
+
   constructor(private actions$: Actions, private todosService: TodosService) {}
 }

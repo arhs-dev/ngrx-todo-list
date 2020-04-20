@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const todos = JSON.parse(fs.readFileSync('./todos.json', 'utf-8'));
+let todos = JSON.parse(fs.readFileSync('./todos.json', 'utf-8'));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -30,6 +30,13 @@ app.post('/todos', (req, res) => {
   res.send(newTodo);
 });
 
+app.put('/todos/:id', (req, res) => {
+  const todoToUpdate = todos.find((todo) => todo.id === req.params.id);
+  const updatedTodo = { ...todoToUpdate, ...req.body };
+  todos = todos.map((todo) => (todo.id === req.params.id ? updatedTodo : todo));
+  res.send(updatedTodo);
+});
+
 const server = http.createServer(app);
 
-server.listen(8001, () => console.log('Ngrx example started'));
+server.listen(8001, () => console.log('Ngrx example api started on http://localhost:8001'));

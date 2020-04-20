@@ -16,4 +16,8 @@ export class TodosService {
   public addTodo(task: string) {
     return this.http.post<Todo>(`${this.url}/todos`, { task });
   }
+
+  public setTodoDone(id: string, isDone: boolean) {
+    return this.http.put<Todo>(`${this.url}/todos/${id}`, { isDone });
+  }
 }

@@ -25,35 +25,16 @@ export const todoReducer = (state = initState, action: todo.TodoActions): State 
       };
     }
 
-    case todo.SET_DONE: {
-      const newTodos = state.entities.map((todo) => {
-        if (todo.id === action.id)
-          return {
-            ...todo,
-            isDone: true,
-          };
-        else return todo;
-      });
+    case todo.UPDATE_TODO_SUCCESS: {
+      const newTodos = state.entities.map((todo) =>
+        todo.id === action.todo.id ? action.todo : todo,
+      );
 
       return {
         entities: newTodos,
       };
     }
 
-    case todo.SET_UNDONE: {
-      const newTodos = state.entities.map((todo) => {
-        if (todo.id === action.id)
-          return {
-            ...todo,
-            isDone: false,
-          };
-        else return todo;
-      });
-
-      return {
-        entities: newTodos,
-      };
-    }
     default:
       return state;
   }

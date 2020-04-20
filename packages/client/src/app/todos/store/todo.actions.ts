@@ -7,6 +7,7 @@ export const ADD_TODO = '[Todos] Add';
 export const ADD_TODO_SUCCESS = '[Todos] Add success';
 export const SET_DONE = '[Todos] Set done';
 export const SET_UNDONE = '[Todos] Set undone';
+export const UPDATE_TODO_SUCCESS = '[Todos] update success';
 
 export class FetchTodos implements Action {
   readonly type = FETCH_TODOS;
@@ -37,10 +38,16 @@ export class SetUndone implements Action {
   constructor(public id: string) {}
 }
 
+export class UpdateTodoSuccess implements Action {
+  readonly type = UPDATE_TODO_SUCCESS;
+  constructor(public todo: Todo) {}
+}
+
 export type TodoActions =
   | AddTodo
   | AddTodoSuccess
   | SetDone
   | SetUndone
+  | UpdateTodoSuccess
   | FetchTodos
   | FetchTodosSuccess;
