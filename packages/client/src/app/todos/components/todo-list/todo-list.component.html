@@ -1,0 +1,45 @@
+<section class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Todo List
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-list>
+        <div class="list-container">
+          <div mat-subheader>Todo</div>
+          <mat-list-item *ngFor="let todo of pendingTodos$ | async">
+            <mat-checkbox (click)="setDone(todo.id)"></mat-checkbox>
+            <div>{{ todo.task }}</div>
+          </mat-list-item>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="list-container">
+          <div mat-subheader>Done</div>
+          <mat-list-item *ngFor="let todo of doneTodos$ | async">
+            <mat-checkbox (click)="setUndone(todo.id)" [checked]="todo.isDone"></mat-checkbox>
+            <div class="done">{{ todo.task }}</div>
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <mat-form-field>
+        <mat-label>New Todo</mat-label>
+        <input
+          matInput
+          placeholder="Buy eggs"
+          (keyup.enter)="addTodo()"
+          [(ngModel)]="newTodoTask"
+        />
+      </mat-form-field>
+    </mat-card-actions>
+
+    <button mat-mini-fab [color]="buttonColor$ | async" (click)="addTodo()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card>
+</section>
